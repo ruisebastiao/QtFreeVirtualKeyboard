@@ -125,6 +125,12 @@ public slots:
     void sendKeyToFocusItem(const QString &keyText);
 
     /**
+     * This function sends the given text to the focused QML item
+     * \note This function will get replaced by virtualKeyClick function later
+     */
+    void sendKeyValueToFocusItem(const Qt::Key key);
+
+    /**
      * Reports the active keyboard rectangle to the engine
      */
     void setKeyboardRectangle(const QRect& Rect);

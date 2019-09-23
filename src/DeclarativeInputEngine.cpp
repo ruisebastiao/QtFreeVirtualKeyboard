@@ -118,6 +118,12 @@ void DeclarativeInputEngine::sendKeyToFocusItem(const QString& text)
     QCoreApplication::sendEvent(QGuiApplication::focusObject(),&ev);
 }
 
+void DeclarativeInputEngine::sendKeyValueToFocusItem(const Qt::Key key)
+{
+    QKeyEvent keyPress(QEvent::KeyPress, key, Qt::NoModifier);
+    QCoreApplication::sendEvent(QGuiApplication::focusObject(),&keyPress);
+}
+
 
 //==============================================================================
 bool DeclarativeInputEngine::virtualKeyPress(Qt::Key key, const QString & text, Qt::KeyboardModifiers modifiers, bool repeat)

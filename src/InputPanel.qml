@@ -219,8 +219,8 @@ Item {
                     color: "#1e1b18"
                     width: 1.25*pimpl.buttonWidth
                     height: pimpl.rowHeight
-                    displayText: "Enter"
-                    text: "\n"
+                    displayText: "Enter"                    
+                    key: Qt.Key_Return
                     inputPanel: root
                 }
             }

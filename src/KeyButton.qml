@@ -65,7 +65,7 @@ Item {
     /**
      * Sets the key code for input method processing.
      */
-    property int key
+    property int key:0
 
     /**
      * Sets the display text - this string is rendered in the keyboard layout.
@@ -134,9 +134,13 @@ Item {
                 console.log("repeating");
             }
 
-            if (!functionKey)
+            if (!functionKey && key == 0)
             {
                 InputEngine.sendKeyToFocusItem(text)
+            }
+            if (key != 0)
+            {
+                InputEngine.sendKeyValueToFocusItem(key)
             }
         }
     }
@@ -161,9 +165,13 @@ Item {
     onReleased: {
         state = ""
         console.log("onReleased - functionKey = " + functionKey)
-        if (!functionKey)
+        if (!functionKey && key == 0)
         {
             InputEngine.sendKeyToFocusItem(text)
+        }
+        if (key != 0)
+        {
+            InputEngine.sendKeyValueToFocusItem(key)
         }
     }
 
