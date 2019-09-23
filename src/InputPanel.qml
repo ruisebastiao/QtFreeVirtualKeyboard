@@ -220,7 +220,7 @@ Item {
                     width: 1.25*pimpl.buttonWidth
                     height: pimpl.rowHeight
                     displayText: "Enter"                    
-                    key: Qt.Key_Return
+                    key: Qt.Key_Enter
                     inputPanel: root
                 }
             }
