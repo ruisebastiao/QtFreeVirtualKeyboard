@@ -137,9 +137,10 @@ void VirtualKeyboardInputContext::setFocusObject(QObject *object)
     static const int DialableInputHints = Qt::ImhDialableCharactersOnly;
 
 
-    qDebug() << "VirtualKeyboardInputContext::setFocusObject";
+    qDebug() << "VirtualKeyboardInputContext::setFocusObject:"<<object;
     if (!object)
     {
+        hideInputPanel();
         return;
     }
 
@@ -148,6 +149,7 @@ void VirtualKeyboardInputContext::setFocusObject(QObject *object)
     d->FocusItem = dynamic_cast<QQuickItem*>(object);
     if (!d->FocusItem)
     {
+        hideInputPanel();
         return;
     }
 
@@ -156,6 +158,7 @@ void VirtualKeyboardInputContext::setFocusObject(QObject *object)
     bool AcceptsInput = d->FocusItem->inputMethodQuery(Qt::ImEnabled).toBool();
     if (!AcceptsInput)
     {
+        hideInputPanel();
         return;
     }
 
@@ -179,7 +182,7 @@ void VirtualKeyboardInputContext::setFocusObject(QObject *object)
     // Search for the top most flickable so that we can scroll the control
     // into the visible area, if the keyboard hides the control
     QQuickItem* i = d->FocusItem;
-    d->Flickable = 0;
+    d->Flickable = nullptr;
     while (i)
     {
         QQuickFlickable* Flickable = dynamic_cast<QQuickFlickable*>(i);
