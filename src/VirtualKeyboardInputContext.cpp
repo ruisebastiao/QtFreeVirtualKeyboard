@@ -64,6 +64,8 @@ VirtualKeyboardInputContext::VirtualKeyboardInputContext() :
     qmlRegisterSingletonType<DeclarativeInputEngine>("FreeVirtualKeyboard", 1, 0,
         "InputEngine", inputEngineProvider);
     connect(d->InputEngine, SIGNAL(animatingChanged()), this, SLOT(ensureFocusedObjectVisible()));
+
+
 }
 
 
@@ -137,7 +139,7 @@ void VirtualKeyboardInputContext::setFocusObject(QObject *object)
     static const int DialableInputHints = Qt::ImhDialableCharactersOnly;
 
 
-    qDebug() << "VirtualKeyboardInputContext::setFocusObject:"<<object;
+
     if (!object)
     {
         hideInputPanel();
@@ -159,6 +161,8 @@ void VirtualKeyboardInputContext::setFocusObject(QObject *object)
     if (!AcceptsInput)
     {
         hideInputPanel();
+
+
         return;
     }
 
@@ -203,34 +207,37 @@ void VirtualKeyboardInputContext::ensureFocusedObjectVisible()
 {
     // If the keyboard is hidden, no scrollable element exists or the keyboard
     // is just animating, then we leave here
+
+    if(!d->Visible && d->Flickable){
+        d->FlickableContentScrollAnimation->setEndValue(0);
+        d->FlickableContentScrollAnimation->start();
+    }
     if (!d->Visible || !d->Flickable || d->InputEngine->isAnimating())
     {
         return;
     }
 
-    qDebug() << "VirtualKeyboardInputContext::ensureFocusedObjectVisible";
+
     QRectF FocusItemRect(0, 0, d->FocusItem->width(), d->FocusItem->height());
     FocusItemRect = d->Flickable->mapRectFromItem(d->FocusItem, FocusItemRect);
-    qDebug() << "FocusItemRect: " << FocusItemRect;
-    qDebug() << "Content origin: " << QPointF(d->Flickable->contentX(),
-        d->Flickable->contentY());
-    qDebug() << "Flickable size: " << QSize(d->Flickable->width(), d->Flickable->height());
+
+
     d->FlickableContentScrollAnimation->setTargetObject(d->Flickable);
-    qreal ContentY = d->Flickable->contentY();
-    if (FocusItemRect.bottom() >= d->Flickable->height())
+
+
+
+
+    int focusContentOffset=(d->Flickable->height()-d->InputEngine->keyboardRectangle().height())-FocusItemRect.bottom();
+
+
+
+    if (focusContentOffset <0 )
     {
-        qDebug() << "Item outside!!!  FocusItemRect.bottom() >= d->Flickable->height()";
-        ContentY = d->Flickable->contentY() + (FocusItemRect.bottom() - d->Flickable->height()) + 20;
-        d->FlickableContentScrollAnimation->setEndValue(ContentY);
+
+        d->FlickableContentScrollAnimation->setEndValue(abs(focusContentOffset));
         d->FlickableContentScrollAnimation->start();
     }
-    else if (FocusItemRect.top() < 0)
-    {
-        qDebug() << "Item outside!!!  d->FocusItem->position().x < 0";
-        ContentY = d->Flickable->contentY() + FocusItemRect.top() - 20;
-        d->FlickableContentScrollAnimation->setEndValue(ContentY);
-        d->FlickableContentScrollAnimation->start();
-    }
+//
 }
 
 
