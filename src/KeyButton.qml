@@ -145,9 +145,7 @@ Item {
         }
     }
 
-    onInputPanelChanged: {
-        console.log("onInputPanelChanged: " + inputPanel.objectName);
-    }
+
 
     /**
      * If the InputPanel property has a valid InputPanel reference and if
