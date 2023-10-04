@@ -1,0 +1,4 @@
+module freevirtualkeyboard
+plugin freevirtualkeyboard ../
+
+depends QtQuick 2.8
