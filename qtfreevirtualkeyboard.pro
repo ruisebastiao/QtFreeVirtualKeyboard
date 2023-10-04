@@ -7,20 +7,18 @@
 QT       += qml quick quick-private gui-private
 
 
-TARGET = freevirtualkeyboard
+TARGET = freevirtualkeyboardmodule
 
 include(../../module.pri)
 
 
 
 
-SOURCES += $$PWD/src/VirtualKeyboardInputContextPlugin.cpp \
-    $$PWD/src/VirtualKeyboardInputContext.cpp \
-    $$PWD/src/DeclarativeInputEngine.cpp
+SOURCES += \
+    src/freevirtualkeyboardmodule_plugin.cpp
 
-HEADERS += $$PWD/src/VirtualKeyboardInputContextPlugin.h\
-    $$PWD/src/VirtualKeyboardInputContext.h \
-    $$PWD/src/DeclarativeInputEngine.h
+HEADERS += \
+    src/freevirtualkeyboardmodule_plugin.h
 
 
 RESOURCES += \
